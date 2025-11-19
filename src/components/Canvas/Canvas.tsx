@@ -128,7 +128,7 @@ export const Canvas = () => {
     }
   }, [currentFrame, width, height, zoom, showGrid, showPivot, showHitboxes]);
 
-  // Render preview canvas (1:1 scale)
+  // Render preview canvas (scaled for visibility)
   const renderPreview = useCallback(() => {
     const canvas = previewCanvasRef.current;
     if (!canvas) return;
@@ -136,17 +136,23 @@ export const Canvas = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas to actual size
-    canvas.width = width;
-    canvas.height = height;
+    const previewScale = 4; // Preview scale factor
+
+    // Set canvas size with scale
+    canvas.width = width * previewScale;
+    canvas.height = height * previewScale;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw checkerboard background
-    drawCheckerboard(ctx, canvas.width, canvas.height, 8);
+    drawCheckerboard(ctx, canvas.width, canvas.height, 8 * previewScale);
 
-    // Draw all visible layers at 1:1 scale
+    // Scale for preview
+    ctx.save();
+    ctx.scale(previewScale, previewScale);
+
+    // Draw all visible layers
     if (currentFrame) {
       for (let i = currentFrame.layers.length - 1; i >= 0; i--) {
         const layer = currentFrame.layers[i];
@@ -158,6 +164,7 @@ export const Canvas = () => {
     }
 
     ctx.globalAlpha = 1;
+    ctx.restore();
   }, [currentFrame, width, height]);
 
   useEffect(() => {
