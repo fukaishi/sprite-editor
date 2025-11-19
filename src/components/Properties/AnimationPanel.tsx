@@ -38,13 +38,13 @@ export const AnimationPanel = () => {
   return (
     <div className="space-y-4">
       <div className="bg-gray-700 p-3 rounded">
-        <h4 className="text-sm font-semibold mb-2">Create New Animation</h4>
+        <h4 className="text-sm font-semibold mb-2">新規アニメーション作成</h4>
         <div className="space-y-2">
           <input
             type="text"
             value={newAnimName}
             onChange={(e) => setNewAnimName(e.target.value)}
-            placeholder="Animation name"
+            placeholder="アニメーション名"
             className="w-full bg-gray-600 text-white px-2 py-1 rounded text-sm"
           />
           <div className="flex gap-2">
@@ -61,7 +61,7 @@ export const AnimationPanel = () => {
             </div>
           </div>
           <div>
-            <label className="text-xs text-gray-400">Select Frames</label>
+            <label className="text-xs text-gray-400">フレーム選択</label>
             <div className="flex flex-wrap gap-1 mt-1">
               {project.frames.map((_, index) => (
                 <button
@@ -83,13 +83,13 @@ export const AnimationPanel = () => {
             disabled={!newAnimName.trim() || selectedFrames.length === 0}
             className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm disabled:opacity-30"
           >
-            Create Animation
+            アニメーション作成
           </button>
         </div>
       </div>
 
       <div>
-        <h4 className="text-sm font-semibold mb-2">Animations</h4>
+        <h4 className="text-sm font-semibold mb-2">アニメーション一覧</h4>
         <div className="space-y-2">
           {project.animations.map((anim) => (
             <div key={anim.id} className="bg-gray-700 p-2 rounded">
@@ -97,8 +97,8 @@ export const AnimationPanel = () => {
                 <div className="flex-1">
                   <div className="font-semibold text-sm">{anim.name}</div>
                   <div className="text-xs text-gray-400">
-                    Frames: {anim.frameIndices.join(', ')} | FPS: {anim.fps} |{' '}
-                    {anim.loop ? 'Loop' : 'Once'}
+                    フレーム: {anim.frameIndices.join(', ')} | FPS: {anim.fps} |{' '}
+                    {anim.loop ? 'ループ' : '1回'}
                   </div>
                 </div>
                 <div className="flex gap-1">
@@ -106,13 +106,13 @@ export const AnimationPanel = () => {
                     onClick={() => setEditingId(editingId === anim.id ? null : anim.id)}
                     className="px-2 py-1 bg-gray-600 hover:bg-gray-500 rounded text-xs"
                   >
-                    Edit
+                    編集
                   </button>
                   <button
                     onClick={() => deleteAnimation(anim.id)}
                     className="px-2 py-1 bg-red-600 hover:bg-red-700 rounded text-xs"
                   >
-                    Delete
+                    削除
                   </button>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export const AnimationPanel = () => {
                           checked={anim.loop}
                           onChange={(e) => updateAnimation(anim.id, { loop: e.target.checked })}
                         />
-                        Loop
+                        ループ
                       </label>
                     </div>
                   </div>

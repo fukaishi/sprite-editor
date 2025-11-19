@@ -2,13 +2,13 @@ import { useEditorStore } from '../../store/editorStore';
 import { ToolType } from '../../types';
 
 const tools: Array<{ type: ToolType; icon: string; label: string }> = [
-  { type: 'pen', icon: '✏️', label: 'Pen' },
-  { type: 'eraser', icon: '🧹', label: 'Eraser' },
-  { type: 'bucket', icon: '🪣', label: 'Bucket' },
-  { type: 'eyedropper', icon: '💧', label: 'Eyedropper' },
-  { type: 'rectangle', icon: '▢', label: 'Rectangle' },
-  { type: 'line', icon: '╱', label: 'Line' },
-  { type: 'select', icon: '⬚', label: 'Select' },
+  { type: 'pen', icon: '✏️', label: 'ペン' },
+  { type: 'eraser', icon: '🧹', label: '消しゴム' },
+  { type: 'bucket', icon: '🪣', label: 'バケツ' },
+  { type: 'eyedropper', icon: '💧', label: 'スポイト' },
+  { type: 'rectangle', icon: '▢', label: '矩形' },
+  { type: 'line', icon: '╱', label: '直線' },
+  { type: 'select', icon: '⬚', label: '選択' },
 ];
 
 export const Toolbar = () => {
@@ -17,7 +17,7 @@ export const Toolbar = () => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg space-y-4">
       <div>
-        <h3 className="text-sm font-semibold text-gray-300 mb-2">Tools</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-2">ツール</h3>
         <div className="grid grid-cols-2 gap-2">
           {tools.map((tool) => (
             <button
@@ -37,7 +37,7 @@ export const Toolbar = () => {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-gray-300 mb-2">Brush Size</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-2">ブラシサイズ</h3>
         <input
           type="range"
           min="1"
@@ -50,7 +50,7 @@ export const Toolbar = () => {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold text-gray-300 mb-2">Zoom</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-2">ズーム</h3>
         <input
           type="range"
           min="1"

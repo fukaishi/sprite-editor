@@ -42,7 +42,7 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
         return;
       }
 
-      const project = createProjectFromFrames('Imported Project', frames);
+      const project = createProjectFromFrames('読み込みプロジェクト', frames);
       loadProject(project);
       onClose();
     } catch (error) {
@@ -52,14 +52,14 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Import PNG Spritesheet">
+    <Modal isOpen={isOpen} onClose={onClose} title="PNGスプライトシート読込">
       <div className="space-y-4">
         <div>
           <button
             onClick={() => fileInputRef.current?.click()}
             className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
           >
-            {selectedFile ? 'Change File' : 'Select File'}
+            {selectedFile ? 'ファイル変更' : 'ファイル選択'}
           </button>
           <input
             ref={fileInputRef}
@@ -81,7 +81,7 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Frame Width</label>
+            <label className="block text-sm text-gray-300 mb-1">フレーム幅</label>
             <input
               type="number"
               value={frameWidth}
@@ -91,7 +91,7 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Frame Height</label>
+            <label className="block text-sm text-gray-300 mb-1">フレーム高さ</label>
             <input
               type="number"
               value={frameHeight}
@@ -105,7 +105,7 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-gray-300 mb-1">
-              Columns (optional)
+              列数 (任意)
             </label>
             <input
               type="number"
@@ -113,14 +113,14 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
               onChange={(e) =>
                 setColumns(e.target.value ? parseInt(e.target.value) : undefined)
               }
-              placeholder="Auto"
+              placeholder="自動"
               className="w-full bg-gray-700 text-white px-3 py-2 rounded"
               min="1"
             />
           </div>
           <div>
             <label className="block text-sm text-gray-300 mb-1">
-              Rows (optional)
+              行数 (任意)
             </label>
             <input
               type="number"
@@ -128,7 +128,7 @@ export const ImportDialog = ({ isOpen, onClose }: ImportDialogProps) => {
               onChange={(e) =>
                 setRows(e.target.value ? parseInt(e.target.value) : undefined)
               }
-              placeholder="Auto"
+              placeholder="自動"
               className="w-full bg-gray-700 text-white px-3 py-2 rounded"
               min="1"
             />

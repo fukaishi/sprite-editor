@@ -18,13 +18,13 @@ export const ColorPalette = () => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg space-y-4">
       <div>
-        <h3 className="text-sm font-semibold text-gray-300 mb-2">Current Colors</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-2">現在の色</h3>
         <div className="flex gap-2 items-center">
           <div
             className="w-16 h-16 border-2 border-gray-600 rounded cursor-pointer"
             style={{ backgroundColor: colorToRGBA(primaryColor) }}
             onClick={() => setShowColorPicker(!showColorPicker)}
-            title="Primary Color"
+            title="メイン色"
           />
           <button
             onClick={swapColors}
@@ -36,7 +36,7 @@ export const ColorPalette = () => {
             className="w-12 h-12 border-2 border-gray-600 rounded cursor-pointer"
             style={{ backgroundColor: colorToRGBA(secondaryColor) }}
             onClick={() => setShowColorPicker(!showColorPicker)}
-            title="Secondary Color"
+            title="サブ色"
           />
         </div>
 
@@ -52,7 +52,7 @@ export const ColorPalette = () => {
               className="w-full h-8"
             />
             <div className="mt-2">
-              <label className="text-xs text-gray-400">Opacity</label>
+              <label className="text-xs text-gray-400">不透明度</label>
               <input
                 type="range"
                 min="0"
@@ -70,12 +70,12 @@ export const ColorPalette = () => {
 
       <div>
         <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-semibold text-gray-300">Palette</h3>
+          <h3 className="text-sm font-semibold text-gray-300">パレット</h3>
           <button
             onClick={handleAddColor}
             className="px-2 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs"
           >
-            + Add
+            + 追加
           </button>
         </div>
         <div className="grid grid-cols-6 gap-1">

@@ -12,12 +12,12 @@ export const LayerPanel = () => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg">
       <div className="flex justify-between items-center mb-3">
-        <h3 className="text-sm font-semibold text-gray-300">Layers</h3>
+        <h3 className="text-sm font-semibold text-gray-300">レイヤー</h3>
         <button
           onClick={() => addLayer(currentFrameIndex)}
           className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs"
         >
-          + Add Layer
+          + レイヤー追加
         </button>
       </div>
 
@@ -97,7 +97,7 @@ export const LayerPanel = () => {
       </div>
 
       <div className="mt-3">
-        <label className="text-xs text-gray-400">Opacity</label>
+        <label className="text-xs text-gray-400">不透明度</label>
         <input
           type="range"
           min="0"

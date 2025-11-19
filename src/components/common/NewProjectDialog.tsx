@@ -9,7 +9,7 @@ interface NewProjectDialogProps {
 
 export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => {
   const { createProject } = useProjectStore();
-  const [name, setName] = useState('Untitled');
+  const [name, setName] = useState('無題');
   const [width, setWidth] = useState(32);
   const [height, setHeight] = useState(32);
 
@@ -26,22 +26,22 @@ export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => 
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="New Project">
+    <Modal isOpen={isOpen} onClose={onClose} title="新規プロジェクト">
       <div className="space-y-4">
         <div>
-          <label className="block text-sm text-gray-300 mb-1">Project Name</label>
+          <label className="block text-sm text-gray-300 mb-1">プロジェクト名</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full bg-gray-700 text-white px-3 py-2 rounded"
-            placeholder="Enter project name"
+            placeholder="プロジェクト名を入力"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Width</label>
+            <label className="block text-sm text-gray-300 mb-1">幅</label>
             <input
               type="number"
               value={width}
@@ -52,7 +52,7 @@ export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => 
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-300 mb-1">Height</label>
+            <label className="block text-sm text-gray-300 mb-1">高さ</label>
             <input
               type="number"
               value={height}
@@ -65,7 +65,7 @@ export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => 
         </div>
 
         <div>
-          <label className="block text-sm text-gray-300 mb-2">Presets</label>
+          <label className="block text-sm text-gray-300 mb-2">プリセット</label>
           <div className="grid grid-cols-4 gap-2">
             {presets.map((preset) => (
               <button
@@ -87,13 +87,13 @@ export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => 
             onClick={onClose}
             className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
           >
-            Cancel
+            キャンセル
           </button>
           <button
             onClick={handleCreate}
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
           >
-            Create
+            作成
           </button>
         </div>
       </div>

@@ -13,19 +13,19 @@ export const Timeline = () => {
       <AnimationPlayback />
 
       <div className="flex justify-between items-center">
-        <h3 className="text-sm font-semibold text-gray-300">Timeline</h3>
+        <h3 className="text-sm font-semibold text-gray-300">タイムライン</h3>
         <div className="flex gap-2">
           <button
             onClick={addFrame}
             className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs"
           >
-            + Add Frame
+            + フレーム追加
           </button>
           <button
             onClick={() => duplicateFrame(currentFrameIndex)}
             className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs"
           >
-            Duplicate
+            複製
           </button>
           <button
             onClick={() => {
@@ -39,7 +39,7 @@ export const Timeline = () => {
             disabled={project.frames.length <= 1}
             className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-xs disabled:opacity-30"
           >
-            Delete
+            削除
           </button>
         </div>
       </div>

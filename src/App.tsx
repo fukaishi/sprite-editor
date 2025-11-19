@@ -142,22 +142,22 @@ function App() {
       {showAutoSavePrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-xl font-bold text-white mb-4">Restore Auto-Saved Project?</h2>
+            <h2 className="text-xl font-bold text-white mb-4">自動保存されたプロジェクトを復元しますか？</h2>
             <p className="text-gray-300 mb-6">
-              We found an auto-saved project. Would you like to restore it?
+              自動保存されたプロジェクトが見つかりました。復元しますか？
             </p>
             <div className="flex gap-3">
               <button
                 onClick={handleRestoreAutoSave}
                 className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
               >
-                Restore
+                復元
               </button>
               <button
                 onClick={handleSkipAutoSave}
                 className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
               >
-                Start New
+                新規作成
               </button>
             </div>
           </div>
@@ -189,13 +189,13 @@ function App() {
       ) : (
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Welcome to Sprite Editor</h2>
-            <p className="text-gray-400 mb-4">Create a new project to get started</p>
+            <h2 className="text-2xl font-bold mb-4">スプライトエディタへようこそ</h2>
+            <p className="text-gray-400 mb-4">新しいプロジェクトを作成して始めましょう</p>
             <button
               onClick={handleNewProject}
               className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-lg"
             >
-              Create New Project
+              新規プロジェクト作成
             </button>
           </div>
         </div>

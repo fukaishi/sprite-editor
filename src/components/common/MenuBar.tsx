@@ -20,7 +20,7 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
     <div className="bg-gray-900 border-b border-gray-700 px-4 py-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <h1 className="text-xl font-bold text-white">Sprite Editor</h1>
+          <h1 className="text-xl font-bold text-white">スプライトエディタ</h1>
           {project && (
             <span className="text-sm text-gray-400">
               {project.settings.name} - {project.settings.width}x{project.settings.height}
@@ -34,33 +34,33 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               onClick={onNewProject}
               className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm"
             >
-              New
+              新規作成
             </button>
             <button
               onClick={onSaveProject}
               disabled={!project}
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm disabled:opacity-30"
             >
-              Save
+              保存
             </button>
             <button
               onClick={onLoadProject}
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm"
             >
-              Load
+              読込
             </button>
             <button
               onClick={onImport}
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm"
             >
-              Import PNG
+              PNG読込
             </button>
             <button
               onClick={onExport}
               disabled={!project}
               className="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm disabled:opacity-30"
             >
-              Export
+              エクスポート
             </button>
           </div>
 
@@ -69,7 +69,7 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               onClick={undo}
               disabled={!canUndo()}
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm disabled:opacity-30"
-              title="Undo (Ctrl+Z)"
+              title="元に戻す (Ctrl+Z)"
             >
               ↶
             </button>
@@ -77,7 +77,7 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               onClick={redo}
               disabled={!canRedo()}
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm disabled:opacity-30"
-              title="Redo (Ctrl+Y)"
+              title="やり直す (Ctrl+Y)"
             >
               ↷
             </button>
@@ -89,27 +89,27 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               className={`px-3 py-1 rounded text-sm ${
                 showGrid ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'
               }`}
-              title="Toggle Grid"
+              title="グリッド表示切替"
             >
-              Grid
+              グリッド
             </button>
             <button
               onClick={togglePivot}
               className={`px-3 py-1 rounded text-sm ${
                 showPivot ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'
               }`}
-              title="Toggle Pivot"
+              title="ピボット表示切替"
             >
-              Pivot
+              ピボット
             </button>
             <button
               onClick={toggleHitboxes}
               className={`px-3 py-1 rounded text-sm ${
                 showHitboxes ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'
               }`}
-              title="Toggle Hitboxes"
+              title="当たり判定表示切替"
             >
-              Hitboxes
+              当たり判定
             </button>
           </div>
         </div>

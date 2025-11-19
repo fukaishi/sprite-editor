@@ -87,7 +87,7 @@ export const AnimationPlayback = () => {
               : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
-          {isPlaying && !currentAnimationId ? '⏸ Pause' : '▶ Play All'}
+          {isPlaying && !currentAnimationId ? '⏸ 停止' : '▶ 全再生'}
         </button>
 
         <div className="flex-1">
@@ -105,7 +105,7 @@ export const AnimationPlayback = () => {
 
       {project && project.animations.length > 0 && (
         <div>
-          <label className="text-xs text-gray-400 mb-1 block">Animations</label>
+          <label className="text-xs text-gray-400 mb-1 block">アニメーション</label>
           <div className="space-y-1">
             {project.animations.map((anim) => (
               <button

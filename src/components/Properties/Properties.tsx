@@ -25,7 +25,7 @@ export const Properties = () => {
 
   return (
     <div className="bg-gray-800 p-4 rounded-lg">
-      <h3 className="text-sm font-semibold text-gray-300 mb-3">Properties</h3>
+      <h3 className="text-sm font-semibold text-gray-300 mb-3">プロパティ</h3>
 
       <div className="flex gap-2 mb-4">
         <button
@@ -36,7 +36,7 @@ export const Properties = () => {
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Pivot
+          ピボット
         </button>
         <button
           onClick={() => setActiveTab('hitbox')}
@@ -46,7 +46,7 @@ export const Properties = () => {
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Hitboxes
+          当たり判定
         </button>
         <button
           onClick={() => setActiveTab('animation')}
@@ -56,14 +56,14 @@ export const Properties = () => {
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Animation
+          アニメーション
         </button>
       </div>
 
       {activeTab === 'pivot' && (
         <div className="space-y-2">
           <div>
-            <label className="text-xs text-gray-400">Pivot X</label>
+            <label className="text-xs text-gray-400">ピボット X</label>
             <input
               type="number"
               value={currentFrame.pivot.x}
@@ -77,7 +77,7 @@ export const Properties = () => {
             />
           </div>
           <div>
-            <label className="text-xs text-gray-400">Pivot Y</label>
+            <label className="text-xs text-gray-400">ピボット Y</label>
             <input
               type="number"
               value={currentFrame.pivot.y}
@@ -101,7 +101,7 @@ export const Properties = () => {
             }}
             className="w-full px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs"
           >
-            Center Pivot
+            中央に配置
           </button>
         </div>
       )}
@@ -113,13 +113,13 @@ export const Properties = () => {
               onClick={() => handleAddHitbox('hitbox')}
               className="flex-1 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-xs"
             >
-              + Hitbox
+              + 攻撃判定
             </button>
             <button
               onClick={() => handleAddHitbox('hurtbox')}
               className="flex-1 px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-xs"
             >
-              + Hurtbox
+              + 被弾判定
             </button>
           </div>
 
@@ -128,7 +128,7 @@ export const Properties = () => {
               <div key={hitbox.id} className="bg-gray-700 p-2 rounded">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-xs font-semibold">
-                    {hitbox.type === 'hitbox' ? '🔴 Hitbox' : '🟢 Hurtbox'} #{index + 1}
+                    {hitbox.type === 'hitbox' ? '🔴 攻撃判定' : '🟢 被弾判定'} #{index + 1}
                   </span>
                   <button
                     onClick={() => deleteHitbox(currentFrameIndex, hitbox.id)}
