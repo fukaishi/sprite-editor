@@ -15,6 +15,7 @@ import { Point, Color } from '../../types';
 
 export const Canvas = () => {
   const displayCanvasRef = useRef<HTMLCanvasElement>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPoint, setLastPoint] = useState<Point | null>(null);
 
@@ -44,7 +45,7 @@ export const Canvas = () => {
     }
   }, [currentLayer, width, height, currentFrameIndex, currentLayerIndex, updateLayerPixels]);
 
-  // Render canvas
+  // Render main canvas (zoomed)
   const render = useCallback(() => {
     const canvas = displayCanvasRef.current;
     if (!canvas) return;
@@ -127,9 +128,42 @@ export const Canvas = () => {
     }
   }, [currentFrame, width, height, zoom, showGrid, showPivot, showHitboxes]);
 
+  // Render preview canvas (1:1 scale)
+  const renderPreview = useCallback(() => {
+    const canvas = previewCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas to actual size
+    canvas.width = width;
+    canvas.height = height;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw checkerboard background
+    drawCheckerboard(ctx, canvas.width, canvas.height, 8);
+
+    // Draw all visible layers at 1:1 scale
+    if (currentFrame) {
+      for (let i = currentFrame.layers.length - 1; i >= 0; i--) {
+        const layer = currentFrame.layers[i];
+        if (layer.visible && layer.pixels) {
+          ctx.globalAlpha = layer.opacity;
+          ctx.putImageData(layer.pixels, 0, 0);
+        }
+      }
+    }
+
+    ctx.globalAlpha = 1;
+  }, [currentFrame, width, height]);
+
   useEffect(() => {
     render();
-  }, [render]);
+    renderPreview();
+  }, [render, renderPreview]);
 
   // Mouse event handlers
   const getCanvasPoint = useCallback(
@@ -242,19 +276,38 @@ export const Canvas = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center bg-gray-800 p-4 rounded-lg">
-      <canvas
-        ref={displayCanvasRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        className="cursor-crosshair"
-        style={{
-          imageRendering: 'pixelated',
-          border: '2px solid #444',
-        }}
-      />
+    <div className="bg-gray-800 p-4 rounded-lg">
+      <div className="flex gap-4 items-start">
+        {/* キャンバス (左側) */}
+        <div className="flex-1 flex flex-col items-center gap-2">
+          <h3 className="text-sm font-semibold text-gray-300">キャンバス</h3>
+          <canvas
+            ref={displayCanvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            className="cursor-crosshair"
+            style={{
+              imageRendering: 'pixelated',
+              border: '2px solid #444',
+            }}
+          />
+        </div>
+
+        {/* プレビュー (右側) */}
+        <div className="flex flex-col items-center gap-2">
+          <h3 className="text-sm font-semibold text-gray-300">プレビュー</h3>
+          <canvas
+            ref={previewCanvasRef}
+            className="pointer-events-none"
+            style={{
+              imageRendering: 'pixelated',
+              border: '2px solid #444',
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
