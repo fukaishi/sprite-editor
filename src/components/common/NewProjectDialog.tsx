@@ -10,18 +10,26 @@ interface NewProjectDialogProps {
 export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => {
   const { createProject } = useProjectStore();
   const [name, setName] = useState('無題');
-  const [width, setWidth] = useState(32);
-  const [height, setHeight] = useState(32);
+  const [sheetWidth, setSheetWidth] = useState(512);
+  const [sheetHeight, setSheetHeight] = useState(512);
+  const [characterWidth, setCharacterWidth] = useState(16);
+  const [characterHeight, setCharacterHeight] = useState(16);
 
   const handleCreate = () => {
-    createProject(name, width, height);
+    createProject(name, sheetWidth, sheetHeight, characterWidth, characterHeight);
     onClose();
   };
 
-  const presets = [
+  const sheetSizes = [
+    { name: '512x512', width: 512, height: 512 },
+    { name: '1024x1024', width: 1024, height: 1024 },
+  ];
+
+  const characterSizes = [
+    { name: '8x8', width: 8, height: 8 },
     { name: '16x16', width: 16, height: 16 },
+    { name: '24x24', width: 24, height: 24 },
     { name: '32x32', width: 32, height: 32 },
-    { name: '48x48', width: 48, height: 48 },
     { name: '64x64', width: 64, height: 64 },
   ];
 
@@ -39,44 +47,45 @@ export const NewProjectDialog = ({ isOpen, onClose }: NewProjectDialogProps) => 
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm text-gray-300 mb-1">幅</label>
-            <input
-              type="number"
-              value={width}
-              onChange={(e) => setWidth(parseInt(e.target.value) || 1)}
-              className="w-full bg-gray-700 text-white px-3 py-2 rounded"
-              min="1"
-              max="256"
-            />
-          </div>
-          <div>
-            <label className="block text-sm text-gray-300 mb-1">高さ</label>
-            <input
-              type="number"
-              value={height}
-              onChange={(e) => setHeight(parseInt(e.target.value) || 1)}
-              className="w-full bg-gray-700 text-white px-3 py-2 rounded"
-              min="1"
-              max="256"
-            />
+        <div>
+          <label className="block text-sm text-gray-300 mb-2">シートサイズ</label>
+          <div className="grid grid-cols-2 gap-2">
+            {sheetSizes.map((size) => (
+              <button
+                key={size.name}
+                onClick={() => {
+                  setSheetWidth(size.width);
+                  setSheetHeight(size.height);
+                }}
+                className={`px-3 py-2 rounded text-sm ${
+                  sheetWidth === size.width && sheetHeight === size.height
+                    ? 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
+              >
+                {size.name}
+              </button>
+            ))}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm text-gray-300 mb-2">プリセット</label>
-          <div className="grid grid-cols-4 gap-2">
-            {presets.map((preset) => (
+          <label className="block text-sm text-gray-300 mb-2">キャラクタサイズ</label>
+          <div className="grid grid-cols-3 gap-2">
+            {characterSizes.map((size) => (
               <button
-                key={preset.name}
+                key={size.name}
                 onClick={() => {
-                  setWidth(preset.width);
-                  setHeight(preset.height);
+                  setCharacterWidth(size.width);
+                  setCharacterHeight(size.height);
                 }}
-                className="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm"
+                className={`px-3 py-2 rounded text-sm ${
+                  characterWidth === size.width && characterHeight === size.height
+                    ? 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
               >
-                {preset.name}
+                {size.name}
               </button>
             ))}
           </div>

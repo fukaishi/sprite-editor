@@ -74,21 +74,10 @@ export interface Tool {
 // Project Settings
 export interface ProjectSettings {
   name: string;
-  width: number;
-  height: number;
-  tileWidth?: number; // for tileset mode
-  tileHeight?: number; // for tileset mode
-  defaultFrameCount: number;
-  isTilesetMode: boolean;
-}
-
-// Tile-specific Types
-export interface TileData {
-  id: string;
-  tileId: number;
-  name: string;
-  collision?: Rectangle;
-  terrainTag?: string;
+  sheetWidth: number; // 512 or 1024
+  sheetHeight: number; // 512 or 1024
+  characterWidth: number; // 8, 16, 24, 32, or 64
+  characterHeight: number; // 8, 16, 24, 32, or 64
 }
 
 // Project Type
@@ -96,10 +85,8 @@ export interface Project {
   id: string;
   version: string;
   settings: ProjectSettings;
-  frames: FrameData[];
-  animations: Animation[];
+  sheetPixels: ImageData | null; // The entire sprite sheet
   palette: Color[];
-  tiles?: TileData[]; // only for tileset mode
   createdAt: number;
   updatedAt: number;
 }
@@ -146,22 +133,19 @@ export interface GodotMetadata {
 
 // UI State Types
 export interface EditorState {
-  currentFrameIndex: number;
-  currentLayerIndex: number;
+  selectedCharacterX: number; // Grid X position for preview
+  selectedCharacterY: number; // Grid Y position for preview
   currentTool: Tool;
   zoom: number;
   showGrid: boolean;
-  showPivot: boolean;
-  showHitboxes: boolean;
-  isPlaying: boolean;
-  playbackFps: number;
 }
 
 // History for Undo/Redo
 export interface HistoryEntry {
-  type: 'draw' | 'layer' | 'frame' | 'project';
-  data: any;
-  timestamp: number;
+  type: 'draw' | 'project';
+  description: string;
+  undo: () => void;
+  redo: () => void;
 }
 
 export interface HistoryState {

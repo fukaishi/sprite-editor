@@ -3,21 +3,17 @@ import { useProjectStore } from './store/projectStore';
 import { useHistoryStore } from './store/historyStore';
 import { MenuBar } from './components/common/MenuBar';
 import { NewProjectDialog } from './components/common/NewProjectDialog';
-import { ImportDialog } from './components/common/ImportDialog';
 import { Canvas } from './components/Canvas/Canvas';
+import { Preview } from './components/Canvas/Preview';
 import { Toolbar } from './components/Toolbar/Toolbar';
 import { ColorPalette } from './components/ColorPalette/ColorPalette';
-import { LayerPanel } from './components/LayerPanel/LayerPanel';
-import { Timeline } from './components/Timeline/Timeline';
-import { Properties } from './components/Properties/Properties';
-import { downloadSpriteSheet, saveProject, loadProject } from './utils/export';
+import { saveProject, loadProject } from './utils/export';
 import { useAutoSave, loadAutoSave } from './hooks/useAutoSave';
 
 function App() {
   const { project, loadProject: setProject } = useProjectStore();
   const { undo, redo } = useHistoryStore();
   const [showNewProjectDialog, setShowNewProjectDialog] = useState(false);
-  const [showImportDialog, setShowImportDialog] = useState(false);
   const [showAutoSavePrompt, setShowAutoSavePrompt] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -74,13 +70,26 @@ function App() {
     }
   };
 
-  const handleImport = () => {
-    setShowImportDialog(true);
-  };
-
   const handleExport = () => {
-    if (project) {
-      downloadSpriteSheet(project, 'horizontal');
+    if (project && project.sheetPixels) {
+      // Export as PNG
+      const canvas = document.createElement('canvas');
+      canvas.width = project.settings.sheetWidth;
+      canvas.height = project.settings.sheetHeight;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.putImageData(project.sheetPixels, 0, 0);
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${project.settings.name || 'sheet'}.png`;
+            a.click();
+            URL.revokeObjectURL(url);
+          }
+        });
+      }
     }
   };
 
@@ -116,7 +125,7 @@ function App() {
         onNewProject={handleNewProject}
         onSaveProject={handleSaveProject}
         onLoadProject={handleLoadProject}
-        onImport={handleImport}
+        
         onExport={handleExport}
       />
 
@@ -131,11 +140,6 @@ function App() {
       <NewProjectDialog
         isOpen={showNewProjectDialog}
         onClose={() => setShowNewProjectDialog(false)}
-      />
-
-      <ImportDialog
-        isOpen={showImportDialog}
-        onClose={() => setShowImportDialog(false)}
       />
 
       {/* Auto-save restore prompt */}
@@ -167,23 +171,19 @@ function App() {
       {project ? (
         <div className="flex-1 flex gap-4 p-4 overflow-hidden">
           {/* Left Sidebar */}
-          <div className="w-64 flex flex-col gap-4 overflow-y-auto">
+          <div className="w-64 flex flex-col gap-4">
             <Toolbar />
             <ColorPalette />
           </div>
 
           {/* Center - Canvas */}
-          <div className="flex-1 flex flex-col gap-4 overflow-hidden">
-            <div className="flex-1 overflow-auto">
-              <Canvas />
-            </div>
-            <Timeline />
+          <div className="flex-1 flex overflow-hidden">
+            <Canvas />
           </div>
 
-          {/* Right Sidebar */}
-          <div className="w-80 flex flex-col gap-4 overflow-y-auto">
-            <LayerPanel />
-            <Properties />
+          {/* Right Sidebar - Preview */}
+          <div className="w-80">
+            <Preview />
           </div>
         </div>
       ) : (

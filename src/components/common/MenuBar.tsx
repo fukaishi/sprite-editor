@@ -6,24 +6,22 @@ interface MenuBarProps {
   onNewProject: () => void;
   onSaveProject: () => void;
   onLoadProject: () => void;
-  onImport: () => void;
   onExport: () => void;
 }
 
-export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, onExport }: MenuBarProps) => {
+export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onExport }: MenuBarProps) => {
   const { project } = useProjectStore();
-  const { showGrid, showPivot, showHitboxes, toggleGrid, togglePivot, toggleHitboxes } =
-    useEditorStore();
+  const { showGrid, toggleGrid } = useEditorStore();
   const { undo, redo, canUndo, canRedo } = useHistoryStore();
 
   return (
     <div className="bg-gray-900 border-b border-gray-700 px-4 py-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <h1 className="text-xl font-bold text-white">スプライトエディタ</h1>
+          <h1 className="text-xl font-bold text-white">ドットキャラクタエディタ</h1>
           {project && (
             <span className="text-sm text-gray-400">
-              {project.settings.name} - {project.settings.width}x{project.settings.height}
+              {project.settings.name} - シート:{project.settings.sheetWidth}x{project.settings.sheetHeight} / キャラ:{project.settings.characterWidth}x{project.settings.characterHeight}
             </span>
           )}
         </div>
@@ -48,12 +46,6 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm"
             >
               読込
-            </button>
-            <button
-              onClick={onImport}
-              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm"
-            >
-              PNG読込
             </button>
             <button
               onClick={onExport}
@@ -92,24 +84,6 @@ export const MenuBar = ({ onNewProject, onSaveProject, onLoadProject, onImport, 
               title="グリッド表示切替"
             >
               グリッド
-            </button>
-            <button
-              onClick={togglePivot}
-              className={`px-3 py-1 rounded text-sm ${
-                showPivot ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'
-              }`}
-              title="ピボット表示切替"
-            >
-              ピボット
-            </button>
-            <button
-              onClick={toggleHitboxes}
-              className={`px-3 py-1 rounded text-sm ${
-                showHitboxes ? 'bg-blue-600' : 'bg-gray-700 hover:bg-gray-600'
-              }`}
-              title="当たり判定表示切替"
-            >
-              当たり判定
             </button>
           </div>
         </div>

@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { Tool, ToolType, Color } from '../types';
 
 interface EditorStore {
-  // Current selection
-  currentFrameIndex: number;
-  currentLayerIndex: number;
+  // Character selection for preview
+  selectedCharacterX: number;
+  selectedCharacterY: number;
 
   // Tool state
   currentTool: Tool;
@@ -16,18 +16,9 @@ interface EditorStore {
   // View state
   zoom: number;
   showGrid: boolean;
-  showPivot: boolean;
-  showHitboxes: boolean;
-  panOffset: { x: number; y: number };
-
-  // Playback state
-  isPlaying: boolean;
-  playbackFps: number;
-  currentAnimationId: string | null;
 
   // Actions
-  setCurrentFrame: (index: number) => void;
-  setCurrentLayer: (index: number) => void;
+  setSelectedCharacter: (x: number, y: number) => void;
   setToolType: (type: ToolType) => void;
   setBrushSize: (size: number) => void;
   setPrimaryColor: (color: Color) => void;
@@ -35,20 +26,14 @@ interface EditorStore {
   swapColors: () => void;
   setZoom: (zoom: number) => void;
   toggleGrid: () => void;
-  togglePivot: () => void;
-  toggleHitboxes: () => void;
-  setPanOffset: (offset: { x: number; y: number }) => void;
-  startPlayback: (animationId?: string) => void;
-  stopPlayback: () => void;
-  setPlaybackFps: (fps: number) => void;
 }
 
 const defaultPrimaryColor: Color = { r: 0, g: 0, b: 0, a: 255 };
 const defaultSecondaryColor: Color = { r: 255, g: 255, b: 255, a: 255 };
 
 export const useEditorStore = create<EditorStore>((set, get) => ({
-  currentFrameIndex: 0,
-  currentLayerIndex: 0,
+  selectedCharacterX: 0,
+  selectedCharacterY: 0,
 
   currentTool: {
     type: 'pen',
@@ -60,22 +45,11 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
   primaryColor: defaultPrimaryColor,
   secondaryColor: defaultSecondaryColor,
 
-  zoom: 8,
+  zoom: 4,
   showGrid: true,
-  showPivot: true,
-  showHitboxes: true,
-  panOffset: { x: 0, y: 0 },
 
-  isPlaying: false,
-  playbackFps: 12,
-  currentAnimationId: null,
-
-  setCurrentFrame: (index) => {
-    set({ currentFrameIndex: index });
-  },
-
-  setCurrentLayer: (index) => {
-    set({ currentLayerIndex: index });
+  setSelectedCharacter: (x, y) => {
+    set({ selectedCharacterX: x, selectedCharacterY: y });
   },
 
   setToolType: (type) => {
@@ -121,29 +95,5 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
   toggleGrid: () => {
     set((state) => ({ showGrid: !state.showGrid }));
-  },
-
-  togglePivot: () => {
-    set((state) => ({ showPivot: !state.showPivot }));
-  },
-
-  toggleHitboxes: () => {
-    set((state) => ({ showHitboxes: !state.showHitboxes }));
-  },
-
-  setPanOffset: (offset) => {
-    set({ panOffset: offset });
-  },
-
-  startPlayback: (animationId) => {
-    set({ isPlaying: true, currentAnimationId: animationId || null });
-  },
-
-  stopPlayback: () => {
-    set({ isPlaying: false });
-  },
-
-  setPlaybackFps: (fps) => {
-    set({ playbackFps: Math.max(1, Math.min(60, fps)) });
   },
 }));
